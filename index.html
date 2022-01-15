@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+        <link rel="icon" href="https://raw.githubusercontent.com/thientn4/iMock/main/browser_logo.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="google-signin-client_id" content="114145994276-hah36o1s44aqoi9bjrb6d54h3uc03678.apps.googleusercontent.com">
+		<title>iMock</title>
+	</head>
+	<body>
+        <div id="head">
+            <img src="account_icon.png" width="32px" id="account"> 
+            <img src="logo.png" width="157px" id="logo">
+            <img src="about_icon.png" width="44px" id="about"> 
+        </div>
+        <div style="height: 80px;"></div>
+        <div id="body">
+            <div id="display">
+                <div id="pre_practice">
+                    <div id="add_question">
+                        <input id="new_question" placeholder="Add any question here">
+                        <div id="add"><p>&emsp;Add&emsp;</p></div>
+                    </div>
+                    <div id="question_list" style="overflow-y:auto;overflow-x:hidden;">
+                        <div class="slot" id="main">
+                            <div class="row">
+                                <div class="question">Tell me about yourself</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="start"><p>&emsp;Start&emsp;</p></div>
+                </div>
+                <div id="get_ready">
+                    <h1>Get ready!</h1>
+                    <div><div id="count_down"></div></div>
+                </div>
+                <div id="practice">
+                    <div id="show_questions" style="overflow-y:auto;overflow-x:hidden;">
+                        <div>
+                            <p id="cur_question"></p>
+                        </div>
+                    </div>
+                    <div id="nav_buttons">
+                        <div id="prev"><p><</p></div>
+                        <div id="end"><p>&emsp;end&emsp;</p></div>
+                        <div id="next"><p>></p></div>
+                    </div>
+                </div>
+                <div id="about_page">
+                    <div>
+                        <h2>What is iMock?</h2>
+                        <h3>"iMock" stands for "mock interview" and we help students practice their behavioral interview skills.</h3>
+                        <h2>What can I do with iMock?</h2>
+                        <h3>With iMock, you can create a list of questions to do mock interview.</h3>
+                        <h2>How about an account with us?</h2>
+                        <h3>By having an iMock account, your current question list can now be saved for the next time you come back.</h3>
+                    </div>
+                </div>
+                <div id="account_page">
+                    <div id="login">
+                        <img src="login_logo.png" height="140px" id=login_logo>
+                        <img height="140px" id="profile_pic">
+                        <br/>
+                        <br/>
+                        <div id="signin_button" class="g-signin2" data-onsuccess="onSignIn"></div>
+                        <div id="signout_button" href="#" onclick="signOut();"><div>Sign out</div></div>
+                        <br/>
+                        <a id="login_cancel">cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="app.js"></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+	</body>
+</html>
