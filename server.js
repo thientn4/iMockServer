@@ -1,68 +1,9 @@
-
-///////////////////////// MODULE & REQUIRE /////////////////////////////
-/*
-
-
-    const {name, ages}=require('./people');
-    --> import 'name' and 'age' from 'people' in same directory
-    --> 'people' must export the 2 imported items:
-                    module.exports={
-                        people: myPeople,
-                        age: myAge
-                    };
-
-
-*/
-//////////////////////////// FILE HANDLING /////////////////////////////
-/*
-
-
-
-    const fs=require('fs');     //fs = 'file system'
-
-
-    //-------------------read-----------------------//
-                    fs.readfile(
-                        'directory/myFile.txt',
-                        (err,data) => {
-                            if(err)console.log(err);
-                            console.log(data);
-                        }
-                    )
-    //-------------------write---------------------//
-                    fs.writeFile(
-                        'directory/myFile.txt',
-                        'hello friend',
-                        () => {
-                            console.log('file was written');
-                        }
-                    )
-    //-----------create directory/folder----------//
-                    fs.mkdir(
-                        './myFolder',
-                        (err)=>{
-                            if(err)console.log(err);
-                            console.log('folder created');
-                        }
-                    )
-    //---------------deleting files--------------//
-                    fs.unlink(
-                        './myFile.txt',
-                        (err)=>{
-                            if(err)console.log(err);
-                            console.log('folder created');
-                        }
-                    )
-                   
-
-
-
-*/
-
-
-
 const http=require('http');
 const fs=require('fs');
+
+//////////////////////////CONNECT TO LOCAL SQL DATABASE TO TEST//////////////////////
+
+/*
 const {Client}=require('pg');
 const db=new Client({
     host:"localhost",
@@ -71,16 +12,29 @@ const db=new Client({
     password: "723155",
     database: "postgres"
 })
+db.connect();
+*/
 
+/////////////////////////////CONNECT TO HEROKU SQL DATABASE//////////////////////////
+
+const { Client } = require('pg');
+const db = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
 db.connect();
 
-const server = http.createServer((req, res)=>{
+///////////////////////////////SERVER IMPLEMENTATION/////////////////////////////////
+
+const server = http.createServer((req, res)=>{////req="HTML request from client", res="our HTML response to edit"
         let result='./'
         res.statusCode=200;
-
         ////////////////////////////////////// LOGIN /////////////////////////////////////
         if(req.url.match('/user_.+')){
             let email=req.url.substring(6);
+            console.log(email)
             result='["Tell me about yourself"'
             db.query("select * from imock.questions where email='"+email+"'",(ERR,RES)=>{
                 if(!ERR){
@@ -91,12 +45,12 @@ const server = http.createServer((req, res)=>{
                 }
                 db.end;
 
-                res.setHeader('Content-Type','text/plain');
-                res.write(result+"]");
-                res.end();
+                res.setHeader('Content-Type','text/plain'); ////specify type of reponse
+                res.write(result+"]");  ///write HTML response content
+                res.end(); ////send the response to client
             })
-            
         }
+        ////////////////////////////////////// ADD & REMOVE /////////////////////////////////////
         else if(req.url.match('/add_.+')){
             let email=req.url.substring(5,req.url.indexOf('~'))
             let question=req.url.substring(req.url.indexOf('~')+1).replace(/~/g,' ')
@@ -118,52 +72,48 @@ const server = http.createServer((req, res)=>{
         }
         ///////////////////////////////////// STARTING UI ////////////////////////////////
         else{
+            console.log(req.url)
             switch(req.url){
                 case '/': 
-                    result+='index.html';
+                    result+='index.html';   //skeleton HTML file for front end
                     break;
                 case '/style.css':
-                    result+='style.css';
+                    result+='style.css';    //CSS style sheet
                     break;
                 case '/app.js':
-                    result+='app.js';
+                    result+='app.js';   //front end client implementation
                     break;
                 case '/account_icon.png':
-                    result+='account_icon.png';
+                    result+='art/account_icon.png';     //logo & icon to display
                     break;
                 case '/logo.png':
-                    result+='logo.png';
+                    result+='art/logo.png';     //logo & icon to display
                     break;
                 case '/about_icon.png':
-                    result+='about_icon.png';
-                    break;
-                case '/login_cancel.png':
-                    result+='login_cancel.png';
+                    result+='art/about_icon.png';     //logo & icon to display
                     break;
                 case '/login_logo.png':
-                    result+='login_logo.png';
-                    break;
-                case '/login.png':
-                    result+='login.png';
+                    result+='art/login_logo.png';     //logo & icon to display
                     break;
                 case '/delete.png':
-                    result+='delete.png';
+                    result+='art/delete.png';     //logo & icon to display
                     break;
                 default:
-                    res.setHeader('Location','/');
+                    console.log("--> default")
+                    res.setHeader('Location','/');  //redirect to home page for invalid directory
                     result+='index.html';
                     res.statusCode=301;
                     break;
             }
             fs.readFile(result,(err,data)=>{
-                if(err)console.log(err);
+                if(err)console.log("error found! ",result,err);
                 else res.write(data);
                 res.end();
             });
         }
 });
 
-server.listen(3000,'localhost',()=>{
+//server.listen(3000,'localhost',()=>{ //----->to test locally
+server.listen(process.env.PORT || 3000,()=>{
     console.log('listening for request on port 3000');
 });
-
