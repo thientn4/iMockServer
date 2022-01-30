@@ -1,4 +1,4 @@
-
+let domain="https://imocker.herokuapp.com/" //"http://localhost:3000/"
 ///////////////////////////// PREVENT ZOOM ON DOUBLE TAP TOUCH SCREEN ///////////////////////
 document.querySelector('body').addEventListener('dblclick', function(el) {
     el.preventDefault();
@@ -58,7 +58,7 @@ function listDisplay(my_questions){
                     //setup server-client communication
                         let communication=new XMLHttpRequest();
                     //send login request
-                        communication.open('POST','http://localhost:3000/remove_'+userEmail+"~"+new_question.replace(/ /g,'~'));
+                        communication.open('POST',domain+'remove_'+userEmail+"~"+new_question.replace(/ /g,'~'));
                         communication.send();
                 }
             })
@@ -115,7 +115,7 @@ document.getElementById('add').addEventListener('click',function(){
         //setup server-client communication
             let communication=new XMLHttpRequest();
         //send login request
-            communication.open('POST','http://localhost:3000/add_'+userEmail+"~"+new_question.replace(/ /g,'~'));
+            communication.open('POST',domain+'add_'+userEmail+"~"+new_question.replace(/ /g,'~'));
             communication.send();
     }
 
@@ -143,7 +143,7 @@ document.getElementById('add').addEventListener('click',function(){
                 //setup server-client communication
                     let communication=new XMLHttpRequest();
                 //send login request
-                    communication.open('POST','http://localhost:3000/remove_'+userEmail+"~"+new_question.replace(/ /g,'~'));
+                    communication.open('POST',domain+'remove_'+userEmail+"~"+new_question.replace(/ /g,'~'));
                     communication.send();
             }
         })
@@ -288,7 +288,7 @@ function onSignIn(googleUser){
         let communication=new XMLHttpRequest();
     //send login request
         userEmail=googleUser.getBasicProfile().getEmail()
-        communication.open('GET','http://localhost:3000/user_'+userEmail);
+        communication.open('GET',domain+'user_'+userEmail);
         communication.send();
     //receive login status from server
         communication.onload=()=>{
