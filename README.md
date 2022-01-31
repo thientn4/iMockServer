@@ -7,3 +7,4 @@ https://imocker.herokuapp.com/
 <div>-------> app.js</div>
 <div>-------> style.css</div>
 <div>-------> index.html</div>
+<div>Note: back-end team please check server.js and app.js to see how client and server communicate with each other</div>
