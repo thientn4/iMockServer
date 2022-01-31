@@ -1,3 +1,8 @@
 # iMockServer:
 https://imocker.herokuapp.com/
-server.js is where the server is
+server code:
+- server.js
+front end code:
+- app.js
+- style.css
+- index.html
