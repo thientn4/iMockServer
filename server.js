@@ -26,6 +26,13 @@ const db = new Client({
 });
 db.connect();
 
+//----------ONLY 1 SQL TABLE FOR DATABASE -----------//
+//CREATE TABLE imock.questions(
+//      email text---------> email of user AKA username
+//      question test 
+//      PRIMARY KEY(email, question)------------>each pair of email & question has to be unique (1 user cannot have repeating questions)
+//);
+
 ///////////////////////////////SERVER IMPLEMENTATION/////////////////////////////////
 
 const server = http.createServer((req, res)=>{////req="HTML request from client", res="our HTML response to edit"
