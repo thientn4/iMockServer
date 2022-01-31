@@ -1,5 +1,5 @@
 # iMockServer:
-<div>iMock is a web app to do mock interview</div>
+<div>iMock is a web app to do mock interview by yourself</div>
 https://imocker.herokuapp.com/
 <div>1/ server code hosted on Heroku and built with NodeJS and PostgreSQL:</div>
 <div>-------> server.js</div>
