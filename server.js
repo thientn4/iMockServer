@@ -32,7 +32,7 @@ const server = http.createServer((req, res)=>{////req="HTML request from client"
         let result='./'
         res.statusCode=200;
         ////////////////////////////////////// LOGIN /////////////////////////////////////
-        if(req.url.match('/user_.+')){
+        if(req.url.match('/user_.+')){  ////request format: "/login_<username>
             let email=req.url.substring(6);
             console.log(email)
             result='["Tell me about yourself"'
@@ -51,7 +51,7 @@ const server = http.createServer((req, res)=>{////req="HTML request from client"
             })
         }
         ////////////////////////////////////// ADD & REMOVE /////////////////////////////////////
-        else if(req.url.match('/add_.+')){
+        else if(req.url.match('/add_.+')){  ////request format: "/add_<username>~<question~to~add>
             let email=req.url.substring(5,req.url.indexOf('~'))
             let question=req.url.substring(req.url.indexOf('~')+1).replace(/~/g,' ')
             db.query("insert into imock.questions values ('"+email+"','"+question+"');",(ERR,RES)=>{
@@ -60,7 +60,7 @@ const server = http.createServer((req, res)=>{////req="HTML request from client"
                 res.end();
             })
         }
-        else if(req.url.match('/remove_.+')){
+        else if(req.url.match('/remove_.+')){ ////request format: "/remove_<username>~<question~to~remove>
             let email=req.url.substring(8,req.url.indexOf('~'))
             let question=req.url.substring(req.url.indexOf('~')+1).replace(/~/g,' ')
             db.query("delete from imock.questions where email='"+email+"' and question='"+question+"';",(ERR,RES)=>{
@@ -104,7 +104,7 @@ const server = http.createServer((req, res)=>{////req="HTML request from client"
                     res.statusCode=301;
                     break;
             }
-            fs.readFile(result,(err,data)=>{
+            fs.readFile(result,(err,data)=>{////response in form of a file
                 if(err)console.log("error found! ",result,err);
                 else res.write(data);
                 res.end();
