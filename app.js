@@ -103,6 +103,7 @@ function textToSpeech(input){
 document.getElementById('add').addEventListener('click',function(){
     let new_question=document.getElementById("new_question").value.trim()
     if(new_question=="")return
+    new_question=new_question.replace(/\?/g,'')
     
     for(let i=0; i<questions.length; i++){
         if(questions[i]==new_question){
