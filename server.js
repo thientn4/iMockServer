@@ -54,8 +54,7 @@ const server = http.createServer((req, res)=>{////req="HTML request from client"
         else if(req.url.match('/add_.+')){
             let email=req.url.substring(5,req.url.indexOf('~'))
             let question=req.url.substring(req.url.indexOf('~')+1).replace(/~/g,' ')
-
-            db.query("insert into imock.questions values ('"+email+"','"+question+"')",(ERR,RES)=>{
+            db.query("insert into imock.questions values ('"+email+"','"+question+"');",(ERR,RES)=>{
                 if(ERR)console.log(ERR.detail)
                 res.statusCode=201;
                 res.end();
@@ -64,7 +63,7 @@ const server = http.createServer((req, res)=>{////req="HTML request from client"
         else if(req.url.match('/remove_.+')){
             let email=req.url.substring(8,req.url.indexOf('~'))
             let question=req.url.substring(req.url.indexOf('~')+1).replace(/~/g,' ')
-            db.query("delete from imock.questions where email='"+email+"' and question='"+question+"'",(ERR,RES)=>{
+            db.query("delete from imock.questions where email='"+email+"' and question='"+question+"';",(ERR,RES)=>{
                 if(ERR)console.log(ERR.detail)
                 res.statusCode=201;
                 res.end();
