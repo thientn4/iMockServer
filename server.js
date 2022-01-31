@@ -26,20 +26,13 @@ const db = new Client({
 });
 db.connect();
 
-//----------ONLY 1 SQL TABLE FOR DATABASE -----------//
-//CREATE TABLE imock.questions(
-//      email text---------> email of user AKA username
-//      question test 
-//      PRIMARY KEY(email, question)------------>each pair of email & question has to be unique (1 user cannot have repeating questions)
-//);
-
 ///////////////////////////////SERVER IMPLEMENTATION/////////////////////////////////
 
 const server = http.createServer((req, res)=>{////req="HTML request from client", res="our HTML response to edit"
         let result='./'
         res.statusCode=200;
         ////////////////////////////////////// LOGIN /////////////////////////////////////
-        if(req.url.match('/user_.+')){  ////request format: "/login_<username>
+        if(req.url.match('/user_.+')){
             let email=req.url.substring(6);
             console.log(email)
             result='["Tell me about yourself"'
@@ -58,7 +51,7 @@ const server = http.createServer((req, res)=>{////req="HTML request from client"
             })
         }
         ////////////////////////////////////// ADD & REMOVE /////////////////////////////////////
-        else if(req.url.match('/add_.+')){  ////request format: "/add_<username>~<question~to~add>
+        else if(req.url.match('/add_.+')){
             let email=req.url.substring(5,req.url.indexOf('~'))
             let question=req.url.substring(req.url.indexOf('~')+1).replace(/~/g,' ')
             db.query("insert into imock.questions values ('"+email+"','"+question+"');",(ERR,RES)=>{
@@ -67,7 +60,7 @@ const server = http.createServer((req, res)=>{////req="HTML request from client"
                 res.end();
             })
         }
-        else if(req.url.match('/remove_.+')){ ////request format: "/remove_<username>~<question~to~remove>
+        else if(req.url.match('/remove_.+')){
             let email=req.url.substring(8,req.url.indexOf('~'))
             let question=req.url.substring(req.url.indexOf('~')+1).replace(/~/g,' ')
             db.query("delete from imock.questions where email='"+email+"' and question='"+question+"';",(ERR,RES)=>{
@@ -88,6 +81,9 @@ const server = http.createServer((req, res)=>{////req="HTML request from client"
                     break;
                 case '/app.js':
                     result+='app.js';   //front end client implementation
+                    break;
+                case '/load_bar.gif':
+                    result+='art/load_bar.gif';     //logo & icon to display
                     break;
                 case '/account_icon.png':
                     result+='art/account_icon.png';     //logo & icon to display
@@ -111,7 +107,7 @@ const server = http.createServer((req, res)=>{////req="HTML request from client"
                     res.statusCode=301;
                     break;
             }
-            fs.readFile(result,(err,data)=>{////response in form of a file
+            fs.readFile(result,(err,data)=>{
                 if(err)console.log("error found! ",result,err);
                 else res.write(data);
                 res.end();
