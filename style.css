@@ -97,6 +97,32 @@ body{
 #login_logo{
     border: medium solid rgb(20, 20, 85);
 }
+#load_page{
+    text-align: center;
+    width:100vw;
+    min-width:100vw;
+    height:100vh;
+    position:fixed;
+    top:0;
+    left:0;
+    background-color:white;
+    z-index: 200;
+    text-align: center;
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+}
+#loading{
+    height:100vh;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    width:max-content;
+    align-items: center;
+}
+#load_gif{
+    border:none;
+}
 #display{
     height:80vh;
     width:600px;
