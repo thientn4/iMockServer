@@ -1,4 +1,11 @@
 let domain="https://imocker.herokuapp.com/" //"http://localhost:3000/"
+
+
+setTimeout(function(){
+    document.getElementById('load_page').style.display = "none"
+},5000)
+
+
 ///////////////////////////// PREVENT ZOOM ON DOUBLE TAP TOUCH SCREEN ///////////////////////
 document.querySelector('body').addEventListener('dblclick', function(el) {
     el.preventDefault();
